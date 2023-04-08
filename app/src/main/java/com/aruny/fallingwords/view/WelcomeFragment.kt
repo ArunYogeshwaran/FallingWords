@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aruny.fallingwords.R
 import com.aruny.fallingwords.databinding.FragmentFirstBinding
@@ -22,6 +22,8 @@ class WelcomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private val viewModel: FallingWordsFragmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +44,8 @@ class WelcomeFragment : Fragment() {
 
         val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.fall_down)
         binding.textviewFirst.startAnimation(animation)
+
+        viewModel.getWords()
     }
 
     override fun onDestroyView() {

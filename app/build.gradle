@@ -11,6 +11,7 @@ def navComponentVersion = "2.5.3"
 def jUnitVersion = "4.13.2"
 def jUnitExtVersion = "1.1.5"
 def espressoCoreVersion = "3.5.1"
+def retrofitVersion = "2.9.0"
 
 android {
     namespace 'com.aruny.fallingwords'
@@ -54,6 +55,9 @@ dependencies {
 
     implementation "androidx.navigation:navigation-fragment-ktx:$navComponentVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navComponentVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     testImplementation "junit:junit:$jUnitVersion"
 
