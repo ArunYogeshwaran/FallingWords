@@ -1,4 +1,4 @@
-package com.aruny.fallingwords
+package com.aruny.fallingwords.view
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.aruny.fallingwords.R
 import com.aruny.fallingwords.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
