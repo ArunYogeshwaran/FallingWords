@@ -3,6 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def coreKtxVersion = "1.10.0"
+def appCompatVersion = "1.6.1"
+def googleMaterialVersion = "1.8.0"
+def constraintlayoutVersion = "2.1.4"
+def navComponentVersion = "2.5.3"
+def jUnitVersion = "4.13.2"
+def jUnitExtVersion = "1.1.5"
+def espressoCoreVersion = "3.5.1"
+
 android {
     namespace 'com.aruny.fallingwords'
     compileSdk 33
@@ -37,13 +46,17 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "androidx.core:core-ktx:$coreKtxVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$googleMaterialVersion"
+
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$navComponentVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navComponentVersion"
+
+    testImplementation "junit:junit:$jUnitVersion"
+
+    androidTestImplementation "androidx.test.ext:junit:$jUnitExtVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
 }
