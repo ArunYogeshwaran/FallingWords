@@ -2,11 +2,12 @@
     <string name="app_name">Falling Words</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">Falling Words</string>
-    <string name="second_fragment_label">Game Result</string>
-    <string name="next">Hello ANU</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Lets meet Taylor Swift\'s Daylight!!</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="welcome_fragment_label">Welcome to the game</string>
+    <string name="falling_words_fragment_label">Falling Words</string>
+    <string name="game_result_fragment_label">Game Result</string>
+    <string name="start_game">Hello ANU! Start the game</string>
+    <string name="restart">Restart Game</string>
+    <string name="sample_falling_word">Lets meet Taylor Swift\'s Daylight!!</string>
+    <string name="wrong_button">Wrong Button</string>
+    <string name="correct_button">Correct Button</string>
 </resources>

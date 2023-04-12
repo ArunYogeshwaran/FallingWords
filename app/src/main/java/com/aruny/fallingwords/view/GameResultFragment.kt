@@ -1,20 +1,20 @@
 package com.aruny.fallingwords.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.aruny.fallingwords.R
-import com.aruny.fallingwords.databinding.FragmentSecondBinding
+import com.aruny.fallingwords.databinding.FragmentGameResultBinding
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * The fragment which shows the result of the game.
  */
 class GameResultFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentGameResultBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,9 +23,9 @@ class GameResultFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentGameResultBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -34,7 +34,7 @@ class GameResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            findNavController().navigate(R.id.action_GameResultFragment_to_WelcomeFragment)
         }
     }
 

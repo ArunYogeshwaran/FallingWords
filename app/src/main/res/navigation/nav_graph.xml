@@ -3,26 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/welcomeFragment"
         android:name="com.aruny.fallingwords.view.WelcomeFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:label="@string/welcome_fragment_label"
+        tools:layout="@layout/fragment_welcome">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_WelcomeFragment_to_FallingWordsFragment"
+            app:destination="@id/fallingWordsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.aruny.fallingwords.view.GameResultFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/fallingWordsFragment"
+        android:name="com.aruny.fallingwords.view.FallingWordsFragment"
+        android:label="@string/falling_words_fragment_label"
+        tools:layout="@layout/fragment_falling_words">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_FallingWordsFragment_to_GameResultFragment"
+            app:destination="@id/gameResultFragment" />
+        <action
+            android:id="@+id/action_FallingWordsFragment_to_WelcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameResultFragment"
+        android:name="com.aruny.fallingwords.view.GameResultFragment"
+        android:label="@string/game_result_fragment_label"
+        tools:layout="@layout/fragment_game_result">
+
+        <action
+            android:id="@+id/action_GameResultFragment_to_WelcomeFragment"
+            app:destination="@id/welcomeFragment" />
     </fragment>
 </navigation>
