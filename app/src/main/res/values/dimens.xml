@@ -2,4 +2,5 @@
     <dimen name="icon_size">64dp</dimen>
     <dimen name="text_size">16sp</dimen>
     <dimen name="falling_word_size">24sp</dimen>
+    <dimen name="standard_margin">16dp</dimen>
 </resources>

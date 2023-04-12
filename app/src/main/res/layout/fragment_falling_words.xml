@@ -10,12 +10,26 @@
         android:id="@+id/text_falling_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sample_falling_word"
+        android:layout_margin="@dimen/standard_margin"
+        android:gravity="center"
+        android:textSize="@dimen/falling_word_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/text_english_word"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Other language word" />
+
+    <TextView
+        android:id="@+id/text_english_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin"
         android:textSize="@dimen/falling_word_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_wrong"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="English word" />
 
     <ImageButton
         android:id="@+id/button_wrong"

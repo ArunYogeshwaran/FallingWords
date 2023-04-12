@@ -33,8 +33,12 @@ class GameResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
+        binding.buttonEndGame.setOnClickListener {
             findNavController().navigate(R.id.action_GameResultFragment_to_WelcomeFragment)
+        }
+
+        binding.buttonRestartGame.setOnClickListener {
+            findNavController().navigate(R.id.action_GameResultFragment_to_FallingWordsFragment)
         }
     }
 
