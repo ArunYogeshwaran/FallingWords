@@ -54,6 +54,7 @@ class FallingWordsFragment : Fragment() {
             binding.textFallingWord.text = listOfWords[currentWordIndex].optionWords.random()
             animation.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
+                    // TODO: Remove the Ans: here
                     binding.textEnglishWord.text =
                         listOfWords[currentWordIndex].englishWord + " (Ans:" + listOfWords[currentWordIndex].correctTranslation + ")"
                     binding.textFallingWord.text =
