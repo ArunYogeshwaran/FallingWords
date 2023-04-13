@@ -10,14 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aruny.fallingwords.R
-import com.aruny.fallingwords.data.WordTranslationPair
 import com.aruny.fallingwords.databinding.FragmentFallingWordsBinding
+import com.aruny.fallingwords.domain.UIWordsModel
 
 /**
  * The fragment which hosts the actual game of falling words.
  */
 class FallingWordsFragment : Fragment() {
-    private var listOfWords: List<WordTranslationPair> = mutableListOf()
+    private var listOfWords: List<UIWordsModel> = mutableListOf()
     private var currentWordIndex = 0
     private var _binding: FragmentFallingWordsBinding? = null
 
@@ -51,11 +51,13 @@ class FallingWordsFragment : Fragment() {
         val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fall_down)
         viewModel.wordPairLiveData.observe(viewLifecycleOwner) {
             listOfWords = it
-            binding.textFallingWord.text = listOfWords[currentWordIndex].textEng
+            binding.textFallingWord.text = listOfWords[currentWordIndex].optionWords.random()
             animation.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
-                    binding.textEnglishWord.text = listOfWords[currentWordIndex].textEng
-                    binding.textFallingWord.text = listOfWords[currentWordIndex].textSpa
+                    binding.textEnglishWord.text =
+                        listOfWords[currentWordIndex].englishWord + " (Ans:" + listOfWords[currentWordIndex].correctTranslation + ")"
+                    binding.textFallingWord.text =
+                        listOfWords[currentWordIndex].optionWords.random()
                     binding.textFallingWord.startAnimation(animation)
                 }
 
