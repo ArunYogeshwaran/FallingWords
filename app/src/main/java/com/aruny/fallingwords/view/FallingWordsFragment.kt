@@ -41,11 +41,25 @@ class FallingWordsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonWrong.setOnClickListener {
+            val currentWord = listOfWords[currentWordIndex]
+            // TODO: Update the score status here
+            if (binding.textFallingWord.text != currentWord.correctTranslation) {
+                println("You are right bro!!")
+            } else {
+                println("You are wrong bro!!")
+            }
 //            findNavController().navigate(R.id.action_FallingWordsFragment_to_WelcomeFragment)
         }
 
         binding.buttonCorrect.setOnClickListener {
 //            findNavController().navigate(R.id.action_FallingWordsFragment_to_GameResultFragment)
+            val currentWord = listOfWords[currentWordIndex]
+            // TODO: Update the score status here
+            if (binding.textFallingWord.text == currentWord.correctTranslation) {
+                println("You are right bro!!")
+            } else {
+                println("You are wrong bro!!")
+            }
         }
 
         val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fall_down)
