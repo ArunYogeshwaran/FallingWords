@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Falling Words</string>
-    <string name="title_activity_main">Word Game</string>
+    <string name="app_name">Word Game</string>
     <!-- Strings used for fragments for navigation -->
     <string name="welcome_fragment_label">Welcome to the game</string>
     <string name="falling_words_fragment_label">Falling Words</string>
