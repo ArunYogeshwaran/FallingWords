@@ -8,6 +8,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.aruny.fallingwords.R
 import com.aruny.fallingwords.databinding.FragmentFallingWordsBinding
@@ -85,10 +86,13 @@ class FallingWordsFragment : Fragment() {
 
     private fun updateCurrentLives() {
         if (--currentLives == 0) {
+            val options = NavOptions.Builder().setPopUpTo(
+                R.id.fallingWordsFragment, true
+            ).build()
             findNavController().navigate(
                 FallingWordsFragmentDirections.actionFallingWordsFragmentToGameResultFragment(
                     currentScore.toString()
-                )
+                ), options
             )
         } else {
             binding.textCurrentLives.text = getString(R.string.lives_number, currentLives)
@@ -114,10 +118,13 @@ class FallingWordsFragment : Fragment() {
                 if (currentWordIndex < listOfWords.size) {
                     binding.textFallingWord.startAnimation(animation)
                 } else {
+                    val options = NavOptions.Builder().setPopUpTo(
+                        R.id.fallingWordsFragment, true
+                    ).build()
                     findNavController().navigate(
                         FallingWordsFragmentDirections.actionFallingWordsFragmentToGameResultFragment(
                             currentScore.toString()
-                        )
+                        ), options
                     )
                 }
             }
