@@ -41,11 +41,11 @@ class FallingWordsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonWrong.setOnClickListener {
-            findNavController().navigate(R.id.action_FallingWordsFragment_to_WelcomeFragment)
+//            findNavController().navigate(R.id.action_FallingWordsFragment_to_WelcomeFragment)
         }
 
         binding.buttonCorrect.setOnClickListener {
-            findNavController().navigate(R.id.action_FallingWordsFragment_to_GameResultFragment)
+//            findNavController().navigate(R.id.action_FallingWordsFragment_to_GameResultFragment)
         }
 
         val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fall_down)
