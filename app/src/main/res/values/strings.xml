@@ -11,4 +11,6 @@
     <string name="wrong_button">Wrong Button</string>
     <string name="correct_button">Correct Button</string>
     <string name="go_to_start">Go to start</string>
+    <string name="score_number">Score: %1$d</string>
+    <string name="lives_number">Lives: %1$d</string>
 </resources>
