@@ -23,10 +23,11 @@
 
         <action
             android:id="@+id/action_FallingWordsFragment_to_GameResultFragment"
-            app:destination="@id/gameResultFragment" />
-        <action
-            android:id="@+id/action_FallingWordsFragment_to_WelcomeFragment"
-            app:destination="@id/welcomeFragment" />
+            app:destination="@id/gameResultFragment">
+            <argument
+                android:name="score"
+                app:argType="string" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/gameResultFragment"
@@ -40,5 +41,10 @@
         <action
             android:id="@+id/action_GameResultFragment_to_FallingWordsFragment"
             app:destination="@id/fallingWordsFragment" />
+
+        <argument
+            android:name="score"
+            android:defaultValue="0"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.aruny.fallingwords.R
 import com.aruny.fallingwords.databinding.FragmentGameResultBinding
 
@@ -15,6 +16,8 @@ import com.aruny.fallingwords.databinding.FragmentGameResultBinding
 class GameResultFragment : Fragment() {
 
     private var _binding: FragmentGameResultBinding? = null
+
+    private val args: GameResultFragmentArgs by navArgs()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -33,6 +36,7 @@ class GameResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.textFinalScore.text = getString(R.string.your_score_is, args.score)
         binding.buttonEndGame.setOnClickListener {
             findNavController().navigate(R.id.action_GameResultFragment_to_WelcomeFragment)
         }

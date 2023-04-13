@@ -85,7 +85,11 @@ class FallingWordsFragment : Fragment() {
 
     private fun updateCurrentLives() {
         if (--currentLives == 0) {
-            findNavController().navigate(R.id.action_FallingWordsFragment_to_GameResultFragment)
+            findNavController().navigate(
+                FallingWordsFragmentDirections.actionFallingWordsFragmentToGameResultFragment(
+                    currentScore.toString()
+                )
+            )
         } else {
             binding.textCurrentLives.text = getString(R.string.lives_number, currentLives)
         }
@@ -111,7 +115,9 @@ class FallingWordsFragment : Fragment() {
                     binding.textFallingWord.startAnimation(animation)
                 } else {
                     findNavController().navigate(
-                        R.id.action_FallingWordsFragment_to_GameResultFragment
+                        FallingWordsFragmentDirections.actionFallingWordsFragmentToGameResultFragment(
+                            currentScore.toString()
+                        )
                     )
                 }
             }

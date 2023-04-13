@@ -13,4 +13,5 @@
     <string name="go_to_start">Go to start</string>
     <string name="score_number">Score: %1$d</string>
     <string name="lives_number">Lives: %1$d</string>
+    <string name="your_score_is">Your score is: %1$s</string>
 </resources>
