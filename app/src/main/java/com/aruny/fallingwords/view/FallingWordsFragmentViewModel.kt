@@ -76,11 +76,27 @@ class FallingWordsFragmentViewModel @Inject constructor(
         if (currentWordIndex < wordsList.size) {
             currentWordIndex++
             _currentWordFlow.value = wordsList[currentWordIndex]
-            _uiState.value = UiState.NextWord(ANIMATION_DURATION_IN_MILLIS)
-            startTimer(seconds = ANIMATION_DURATION_IN_SECS)
+            val countdownTimer = getCountdown(currentWordIndex)
+            _uiState.value = UiState.NextWord(countdownTimer.toLong() * SECS_TO_MILLI_SECS)
+            startTimer(countdownTimer)
         } else {
             handleGameOver()
         }
+    }
+
+    private fun getCountdown(currentWordIndex: Int): Int {
+        val reducingFactor = getReducingFactor(currentWordIndex)
+        val countDown = ANIMATION_DURATION_IN_SECS - reducingFactor
+        return if (countDown > MINIMUM_COUNTDOWN_SECS) {
+            countDown
+        } else {
+            MINIMUM_COUNTDOWN_SECS
+        }
+    }
+
+    private fun getReducingFactor(currentWordIndex: Int): Int {
+        val effectiveDivider = wordsList.size / LEVEL_DIVIDER
+        return (currentWordIndex + 1) / effectiveDivider
     }
 
     fun checkAnswer(shouldBeCorrect: Boolean) {
@@ -144,8 +160,17 @@ class FallingWordsFragmentViewModel @Inject constructor(
         private const val DEFAULT_SCORE = 0
         private const val DEFAULT_TIME = 0
         private const val MAX_LIVES = 3
+
+        /**
+         * Divider used to decide when to increase the speed of words.
+         *
+         * If there are 250 words in total, the speed will increase for every 25th(250/10) word
+         */
+        private const val LEVEL_DIVIDER = 10
+
         private const val TIMER_DELAY_IN_MILLIS = 1000L
         private const val ANIMATION_DURATION_IN_SECS = 10
-        private const val ANIMATION_DURATION_IN_MILLIS = ANIMATION_DURATION_IN_SECS * 1000L
+        private const val SECS_TO_MILLI_SECS = 1000L
+        private const val MINIMUM_COUNTDOWN_SECS = 3
     }
 }

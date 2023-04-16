@@ -96,14 +96,14 @@ class FallingWordsFragment : Fragment() {
         }
     }
 
-    private fun animateWord(duration: Long) {
+    private fun animateWord(durationMilliSecs: Long) {
         with(binding) {
             val transitionValue = textEnglishWord.top - textFallingWord.bottom
             textFallingWord.translationY = DEFAULT_TRANSLATION_Y
             textFallingWord
                 .animate()
                 .translationY(transitionValue.toFloat())
-                .setDuration(duration)
+                .setDuration(durationMilliSecs)
                 .setInterpolator(AccelerateDecelerateInterpolator())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
@@ -136,7 +136,7 @@ class FallingWordsFragment : Fragment() {
                         viewModel.getNextWord()
                     }
                     is UiState.NextWord -> {
-                        animateWord(it.duration)
+                        animateWord(it.durationMilliSecs)
                     }
                     is UiState.CorrectAnswer -> {
                         updateCurrentScore(it.score)
