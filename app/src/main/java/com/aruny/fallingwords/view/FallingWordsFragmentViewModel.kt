@@ -7,9 +7,9 @@ import com.aruny.fallingwords.domain.WordMixerUseCase
 import com.aruny.fallingwords.domain.model.UIWordsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -44,6 +44,11 @@ class FallingWordsFragmentViewModel @Inject constructor(
     private val _currentWordFlow = MutableStateFlow(UIWordsModel.NOT_LOADED)
     val currentWordFlow: StateFlow<UIWordsModel> = _currentWordFlow.asStateFlow()
 
+    private val _timerStateFlow = MutableStateFlow(DEFAULT_TIME)
+    val timerStateFlow: StateFlow<Int> = _timerStateFlow.asStateFlow()
+
+    private var timerJob: Job? = null
+
     fun startGame() {
         fetchWords()
 
@@ -51,6 +56,7 @@ class FallingWordsFragmentViewModel @Inject constructor(
         currentScore = DEFAULT_SCORE
         currentLives = MAX_LIVES
         _currentWordFlow.value = UIWordsModel.NOT_LOADED
+        resetTimer()
     }
 
     private fun fetchWords() {
@@ -70,7 +76,8 @@ class FallingWordsFragmentViewModel @Inject constructor(
         if (currentWordIndex < wordsList.size) {
             currentWordIndex++
             _currentWordFlow.value = wordsList[currentWordIndex]
-            _uiState.value = UiState.NextWord(TRANSITION_DURATION_IN_MILLIS)
+            _uiState.value = UiState.NextWord(ANIMATION_DURATION_IN_MILLIS)
+            startTimer(seconds = ANIMATION_DURATION_IN_SECS)
         } else {
             handleGameOver()
         }
@@ -87,12 +94,20 @@ class FallingWordsFragmentViewModel @Inject constructor(
     }
 
     private fun handleCorrectAnswer() {
+        resetTimer()
         currentScore++
         _uiState.value = UiState.CorrectAnswer(currentScore)
         getNextWord()
     }
 
+    private fun resetTimer() {
+        timerJob?.cancel()
+        _timerStateFlow.value = DEFAULT_TIME
+    }
+
     private fun handleIncorrectAnswer() {
+        resetTimer()
+        _timerStateFlow.value = DEFAULT_TIME
         currentLives--
         if (currentLives == 0) {
             handleGameOver()
@@ -107,13 +122,30 @@ class FallingWordsFragmentViewModel @Inject constructor(
     }
 
     private fun handleGameOver() {
+        timerJob?.cancel()
         _uiState.value = UiState.GameOver(currentScore)
+    }
+
+    private fun startTimer(seconds: Int) {
+        timerJob = viewModelScope.launch {
+            (seconds - 1 downTo 0).asFlow()
+                .onEach { delay(TIMER_DELAY_IN_MILLIS) }
+                .onStart { emit(seconds) }
+                .conflate()
+                .flowOn(Dispatchers.Default)
+                .collect {
+                    _timerStateFlow.value = it
+                }
+        }
     }
 
     companion object {
         private const val DEFAULT_WORD_INDEX = -1
         private const val DEFAULT_SCORE = 0
+        private const val DEFAULT_TIME = 0
         private const val MAX_LIVES = 3
-        private const val TRANSITION_DURATION_IN_MILLIS = 5500L
+        private const val TIMER_DELAY_IN_MILLIS = 1000L
+        private const val ANIMATION_DURATION_IN_SECS = 3
+        private const val ANIMATION_DURATION_IN_MILLIS = ANIMATION_DURATION_IN_SECS * 1000L
     }
 }

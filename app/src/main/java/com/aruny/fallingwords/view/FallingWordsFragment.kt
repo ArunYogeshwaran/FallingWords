@@ -86,6 +86,11 @@ class FallingWordsFragment : Fragment() {
                             textCurrentLives.text = getString(R.string.lives_number, it)
                         }
                     }
+                    launch {
+                        viewModel.timerStateFlow.collectLatest {
+                            textTimer.text = getString(R.string.timer_secs, it)
+                        }
+                    }
                 }
             }
         }
