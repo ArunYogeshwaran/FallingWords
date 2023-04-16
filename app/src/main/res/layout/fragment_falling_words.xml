@@ -8,12 +8,11 @@
 
     <TextView
         android:id="@+id/text_falling_word"
-        android:layout_width="wrap_content"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_margin"
+        android:layout_margin="@dimen/big_margin"
         android:gravity="center"
-        android:textSize="@dimen/falling_word_size"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_timer"
@@ -21,12 +20,11 @@
 
     <TextView
         android:id="@+id/text_english_word"
+        style="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_margin"
         android:gravity="center"
-        android:textSize="@dimen/falling_word_size"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_wrong"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,24 +64,22 @@
 
     <TextView
         android:id="@+id/text_current_lives"
+        style="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_margin"
         android:text="@string/lives_number"
-        android:textSize="@dimen/falling_word_size"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/lives_number" />
 
     <TextView
         android:id="@+id/text_current_score"
+        style="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_margin"
         android:text="@string/score_number"
-        android:textSize="@dimen/falling_word_size"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/score_number" />
@@ -99,12 +95,12 @@
 
     <TextView
         android:id="@+id/text_timer"
-        android:layout_width="wrap_content"
+        style="@style/TextAppearance.AppCompat.Display1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/standard_margin"
+        android:gravity="center"
         android:text="@string/timer_secs"
-        android:textSize="@dimen/falling_word_size"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_current_lives" />

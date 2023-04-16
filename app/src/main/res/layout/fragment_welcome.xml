@@ -8,13 +8,50 @@
 
     <Button
         android:id="@+id/button_start_game"
+        style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin"
         android:text="@string/start_game"
-        android:textSize="@dimen/text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_welcome_note" />
+
+    <TextView
+        android:id="@+id/text_welcome_title"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin"
+        android:gravity="center"
+        android:text="@string/welcome_text_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_welcome_subtitle"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin"
+        android:gravity="center"
+        android:text="@string/welcome_text_subtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_welcome_title" />
+
+    <TextView
+        android:id="@+id/text_welcome_note"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin"
+        android:gravity="center"
+        android:text="@string/welcome_text_note"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_welcome_subtitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

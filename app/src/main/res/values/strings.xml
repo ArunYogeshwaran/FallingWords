@@ -13,5 +13,8 @@
     <string name="score_number">Score: %1$d</string>
     <string name="lives_number">Lives: %1$d</string>
     <string name="timer_secs">Timer: %1$d secs left</string>
-    <string name="your_score_is">Your score is: %1$s</string>
+    <string name="your_score_is">Well played! Your score is: %1$s. Ciao!</string>
+    <string name="welcome_text_title">Hola! This is a fun game to learn a language by saving words before they fall down to the bottom of the screen</string>
+    <string name="welcome_text_subtitle">As of now, this game only support English-Spanish. You have to tap the right or wrong button based on the correctness of the translation when the Spanish word falls down</string>
+    <string name="welcome_text_note">Note: The words will start falling down as soon as you tap the start button</string>
 </resources>
