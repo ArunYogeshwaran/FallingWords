@@ -1,4 +1,4 @@
-package com.aruny.fallingwords.view
+package com.aruny.fallingwords.view.util
 
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner

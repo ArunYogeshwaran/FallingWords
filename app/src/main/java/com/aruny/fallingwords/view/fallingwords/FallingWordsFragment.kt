@@ -1,4 +1,4 @@
-package com.aruny.fallingwords.view
+package com.aruny.fallingwords.view.fallingwords
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -162,7 +162,7 @@ class FallingWordsFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        // TODO: Should pass the animation and the timer here
+        // TODO: Should pause the animation and the timer here
     }
 
     override fun onResume() {

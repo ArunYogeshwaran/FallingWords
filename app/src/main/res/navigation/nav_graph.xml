@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/fallingWordsFragment"
-        android:name="com.aruny.fallingwords.view.FallingWordsFragment"
+        android:name="com.aruny.fallingwords.view.fallingwords.FallingWordsFragment"
         android:label="@string/falling_words_fragment_label"
         tools:layout="@layout/fragment_falling_words">
 

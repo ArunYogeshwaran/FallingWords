@@ -1,6 +1,6 @@
 package com.aruny.fallingwords.data.rest
 
-import com.aruny.fallingwords.data.WordTranslationPair
+import com.aruny.fallingwords.data.model.WordTranslationPair
 import retrofit2.http.GET
 
 interface WordsApi {

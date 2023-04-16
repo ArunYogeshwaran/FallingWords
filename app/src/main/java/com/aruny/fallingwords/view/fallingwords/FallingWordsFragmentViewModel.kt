@@ -1,10 +1,11 @@
-package com.aruny.fallingwords.view
+package com.aruny.fallingwords.view.fallingwords
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aruny.fallingwords.domain.WordMixerUseCase
 import com.aruny.fallingwords.domain.model.UIWordsModel
+import com.aruny.fallingwords.domain.usecase.WordMixerUseCase
+import com.aruny.fallingwords.view.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -13,6 +14,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Viewmodel class for [FallingWordsFragment]
+ */
 @HiltViewModel
 class FallingWordsFragmentViewModel @Inject constructor(
     private val wordMixerUseCase: WordMixerUseCase
@@ -49,6 +53,9 @@ class FallingWordsFragmentViewModel @Inject constructor(
 
     private var timerJob: Job? = null
 
+    /**
+     * Fetches the required words list and resets the state to the initial state.
+     */
     fun startGame() {
         fetchWords()
 
@@ -61,12 +68,16 @@ class FallingWordsFragmentViewModel @Inject constructor(
 
     private fun fetchWords() {
         _uiState.value = UiState.FetchingWords(DEFAULT_SCORE, MAX_LIVES)
+        // TODO: Move this to a Provider class and inject it using Hilt
         viewModelScope.launch(Dispatchers.IO) {
             wordsList = wordMixerUseCase.fetchWords()
             _uiState.postValue(UiState.WordsFetched)
         }
     }
 
+    /**
+     * Gets the next word in the list if the list of words is not empty.
+     */
     fun getNextWord() {
         if (wordsList.isEmpty()) {
             return
@@ -99,6 +110,11 @@ class FallingWordsFragmentViewModel @Inject constructor(
         return (currentWordIndex + 1) / effectiveDivider
     }
 
+    /**
+     * Checks whether the answer option by the user is correct ot not.
+     *
+     * @param shouldBeCorrect true if the user selected the correct button otherwise false.
+     */
     fun checkAnswer(shouldBeCorrect: Boolean) {
         val word = wordsList[currentWordIndex]
         val isAnswerCorrect = word.isCorrectTranslation == shouldBeCorrect
@@ -133,6 +149,9 @@ class FallingWordsFragmentViewModel @Inject constructor(
         }
     }
 
+    /**
+     * This should be called when the user didn't tap any of the buttons till the word fell down.
+     */
     fun handleNoResponseFromUser() {
         handleIncorrectAnswer()
     }

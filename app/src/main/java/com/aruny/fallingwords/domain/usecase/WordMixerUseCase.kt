@@ -1,13 +1,19 @@
-package com.aruny.fallingwords.domain
+package com.aruny.fallingwords.domain.usecase
 
-import com.aruny.fallingwords.data.WordTranslationPair
-import com.aruny.fallingwords.data.WordsRepository
+import com.aruny.fallingwords.data.model.WordTranslationPair
+import com.aruny.fallingwords.data.repository.WordsRepository
 import com.aruny.fallingwords.domain.model.UIWordsModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class WordMixerUseCase @Inject constructor(private val wordsRepository: WordsRepository) {
+    /**
+     * Fetches the list of words the data source, creates and returns the word groups by randomly
+     * mixing the option words.
+     *
+     * @return List of [UIWordsModel]
+     */
     suspend fun fetchWords(): List<UIWordsModel> {
         return withContext(Dispatchers.IO) {
             val wordTranslationPairs = wordsRepository.getWords()

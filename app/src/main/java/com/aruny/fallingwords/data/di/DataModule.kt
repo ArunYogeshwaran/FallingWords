@@ -1,7 +1,7 @@
 package com.aruny.fallingwords.data.di
 
-import com.aruny.fallingwords.data.WordsRepository
-import com.aruny.fallingwords.data.WordsRepositoryImpl
+import com.aruny.fallingwords.data.repository.WordsRepository
+import com.aruny.fallingwords.data.repository.WordsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

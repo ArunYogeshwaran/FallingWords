@@ -1,4 +1,4 @@
-package com.aruny.fallingwords.data
+package com.aruny.fallingwords.data.model
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package com.aruny.fallingwords.view
+package com.aruny.fallingwords.view.fallingwords
 
 sealed class UiState {
     data class FetchingWords(val score: Int, val lives: Int) : UiState()
