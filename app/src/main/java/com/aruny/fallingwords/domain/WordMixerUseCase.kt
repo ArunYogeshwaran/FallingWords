@@ -15,7 +15,7 @@ class WordMixerUseCase @Inject constructor(private val wordsRepository: WordsRep
                 val randomSpanishWord = getRandomSpanishWord(it.textSpa, wordTranslationPairs)
                 UIWordsModel(
                     englishWord = it.textEng,
-                    spanishWord = randomSpanishWord,
+                    otherLangWord = randomSpanishWord,
                     isCorrectTranslation = randomSpanishWord == it.textSpa
                 )
             }

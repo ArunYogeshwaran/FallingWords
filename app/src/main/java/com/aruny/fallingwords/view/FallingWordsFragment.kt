@@ -1,29 +1,30 @@
 package com.aruny.fallingwords.view
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.aruny.fallingwords.R
 import com.aruny.fallingwords.databinding.FragmentFallingWordsBinding
-import com.aruny.fallingwords.domain.model.UIWordsModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 /**
  * The fragment which hosts the actual game of falling words.
  */
 @AndroidEntryPoint
 class FallingWordsFragment : Fragment() {
-    private var listOfWords: List<UIWordsModel> = mutableListOf()
-    private var currentWordIndex = 0
-    private var currentLives = MAX_LIVES
-    private var currentScore = 0
     private var _binding: FragmentFallingWordsBinding? = null
 
     // This property is only valid between onCreateView and
@@ -32,11 +33,13 @@ class FallingWordsFragment : Fragment() {
 
     private val viewModel: FallingWordsFragmentViewModel by viewModels()
 
+    // Boolean to track whether the user answered before the word fell down
+    private var responseReceived: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentFallingWordsBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -44,105 +47,132 @@ class FallingWordsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textCurrentScore.text = getString(R.string.score_number, 0)
-        binding.textCurrentLives.text = getString(R.string.lives_number, MAX_LIVES)
+        setClickListeners()
+        observeUiState()
+        viewModel.startGame()
+    }
+
+    private fun setClickListeners() {
+        binding.buttonCorrect.setOnClickListener {
+            responseReceived = true
+            viewModel.checkAnswer(true)
+        }
 
         binding.buttonWrong.setOnClickListener {
-            val currentWord = listOfWords[currentWordIndex]
-            if (currentWord.isCorrectTranslation.not()) {
-                updateCurrentScore()
-                println("You are right bro!!")
-            } else {
-                updateCurrentLives()
-                println("You are wrong bro!!")
-            }
-            currentWordIndex++
-            startFallingWords()
-        }
-
-        binding.buttonCorrect.setOnClickListener {
-            val currentWord = listOfWords[currentWordIndex]
-            if (currentWord.isCorrectTranslation) {
-                updateCurrentScore()
-                println("You are right bro!!")
-            } else {
-                updateCurrentLives()
-                println("You are wrong bro!!")
-            }
-            currentWordIndex++
-            startFallingWords()
-        }
-
-        viewModel.wordPairLiveData.observe(viewLifecycleOwner) {
-            listOfWords = it
-            binding.textFallingWord.text = listOfWords[currentWordIndex].spanishWord
-            startFallingWords()
-        }
-
-        viewModel.getWords()
-    }
-
-    private fun updateCurrentScore() {
-        binding.textCurrentScore.text = getString(R.string.score_number, ++currentScore)
-    }
-
-    private fun updateCurrentLives() {
-        if (--currentLives == 0) {
-            val options = NavOptions.Builder().setPopUpTo(
-                R.id.fallingWordsFragment, true
-            ).build()
-            findNavController().navigate(
-                FallingWordsFragmentDirections.actionFallingWordsFragmentToGameResultFragment(
-                    currentScore.toString()
-                ), options
-            )
-        } else {
-            binding.textCurrentLives.text = getString(R.string.lives_number, currentLives)
+            responseReceived = true
+            viewModel.checkAnswer(false)
         }
     }
 
-    private fun startFallingWords() {
-        val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.anim_fall_down)
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {
-                // TODO: Remove the Ans: here
-                binding.textEnglishWord.text =
-                    listOfWords[currentWordIndex].englishWord + " --> is Correct : " + listOfWords[currentWordIndex].isCorrectTranslation
-                binding.textFallingWord.text = listOfWords[currentWordIndex].spanishWord
-                binding.textFallingWord.startAnimation(animation)
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-                updateCurrentLives()
-                currentWordIndex++
-                // Ensure we move to the result fragment when all the words are done
-                if (currentWordIndex < listOfWords.size) {
-                    binding.textFallingWord.startAnimation(animation)
-                } else {
-                    val options = NavOptions.Builder().setPopUpTo(
-                        R.id.fallingWordsFragment, true
-                    ).build()
-                    findNavController().navigate(
-                        FallingWordsFragmentDirections.actionFallingWordsFragmentToGameResultFragment(
-                            currentScore.toString()
-                        ), options
-                    )
+    private fun collectFlows() {
+        with(binding) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    launch {
+                        viewModel.currentWordFlow.collectLatest {
+                            // TODO: Remove the Ans: here
+                            textEnglishWord.text =
+                                it.englishWord + " --> is Correct : " + it.isCorrectTranslation
+                            textFallingWord.text = it.otherLangWord
+                        }
+                    }
+                    launch {
+                        viewModel.scoreStateFlow.collectLatest {
+                            textCurrentScore.text = getString(R.string.score_number, it)
+                        }
+                    }
+                    launch {
+                        viewModel.livesStateFlow.collectLatest {
+                            textCurrentLives.text = getString(R.string.lives_number, it)
+                        }
+                    }
                 }
             }
+        }
+    }
 
-            override fun onAnimationRepeat(animation: Animation?) {
+    private fun animateWord(duration: Long) {
+        with(binding) {
+            val transitionValue = textEnglishWord.top - textFallingWord.bottom
+            textFallingWord.translationY = DEFAULT_TRANSLATION_Y
+            textFallingWord
+                .animate()
+                .translationY(transitionValue.toFloat())
+                .setDuration(duration)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        if (responseReceived.not()) {
+                            viewModel.handleNoResponseFromUser()
+                        }
+                        responseReceived = false
+                    }
+                })
+        }
+    }
 
+    private fun FragmentFallingWordsBinding.toggleButtons(shouldEnable: Boolean) {
+        buttonCorrect.isEnabled = shouldEnable
+        buttonWrong.isEnabled = shouldEnable
+    }
+
+    private fun observeUiState() {
+        collectFlows()
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            with(binding) {
+                when (it) {
+                    is UiState.FetchingWords -> {
+                        progressBar.visibility = View.VISIBLE
+                        binding.textCurrentScore.text = getString(R.string.score_number, it.score)
+                        binding.textCurrentLives.text = getString(R.string.lives_number, it.lives)
+                    }
+                    is UiState.WordsFetched -> {
+                        progressBar.visibility = View.GONE
+                        viewModel.getNextWord()
+                    }
+                    is UiState.NextWord -> {
+                        animateWord(it.duration)
+                    }
+                    is UiState.CorrectAnswer -> {
+                        updateCurrentScore(it.score)
+                    }
+                    is UiState.IncorrectAnswer -> {
+                        updateCurrentLives(it.lives)
+                    }
+                    is UiState.GameOver -> {
+                        textFallingWord.animate().cancel()
+                        val options = NavOptions.Builder().setPopUpTo(
+                            R.id.fallingWordsFragment, true
+                        ).build()
+                        findNavController().navigate(
+                            FallingWordsFragmentDirections.actionFallingWordsFragmentToGameResultFragment(
+                                it.score.toString()
+                            ), options
+                        )
+                    }
+                    is UiState.UpdateFallSpeed -> {
+                        // TODO()
+                    }
+                }
             }
-        })
-        binding.textFallingWord.startAnimation(animation)
+        }
+    }
+
+    private fun updateCurrentScore(score: Int) {
+        binding.textCurrentScore.text = getString(R.string.score_number, score)
+    }
+
+    private fun updateCurrentLives(lives: Int) {
+        binding.textCurrentLives.text = getString(R.string.lives_number, lives)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.textFallingWord.animate().setListener(null)
         _binding = null
     }
 
     companion object {
-        private const val MAX_LIVES = 3
+        private const val DEFAULT_TRANSLATION_Y = 0f
     }
 }
