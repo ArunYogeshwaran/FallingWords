@@ -9,8 +9,6 @@ sealed class UiState {
 
     data class IncorrectAnswer(val lives: Int) : UiState()
 
-    data class UpdateFallSpeed(val transition: Long) : UiState()
-
     data class NextWord(val duration: Long) : UiState()
 
     data class GameOver(val score: Int) : UiState()

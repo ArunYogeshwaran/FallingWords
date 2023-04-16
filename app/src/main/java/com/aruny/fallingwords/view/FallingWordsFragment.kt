@@ -155,12 +155,19 @@ class FallingWordsFragment : Fragment() {
                             ), options
                         )
                     }
-                    is UiState.UpdateFallSpeed -> {
-                        // TODO()
-                    }
                 }
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // TODO: Should pass the animation and the timer here
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // TODO: Should resume the animation and the timer here
     }
 
     private fun updateCurrentScore(score: Int) {

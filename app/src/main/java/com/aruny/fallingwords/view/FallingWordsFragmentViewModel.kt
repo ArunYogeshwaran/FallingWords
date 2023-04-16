@@ -145,7 +145,7 @@ class FallingWordsFragmentViewModel @Inject constructor(
         private const val DEFAULT_TIME = 0
         private const val MAX_LIVES = 3
         private const val TIMER_DELAY_IN_MILLIS = 1000L
-        private const val ANIMATION_DURATION_IN_SECS = 3
+        private const val ANIMATION_DURATION_IN_SECS = 10
         private const val ANIMATION_DURATION_IN_MILLIS = ANIMATION_DURATION_IN_SECS * 1000L
     }
 }
