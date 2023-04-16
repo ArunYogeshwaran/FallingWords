@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aruny.fallingwords.data.WordTranslationPair
 import com.aruny.fallingwords.data.WordsRepository
-import com.aruny.fallingwords.domain.UIWordsModel
+import com.aruny.fallingwords.domain.model.UIWordsModel
 import com.aruny.fallingwords.domain.WordMixerUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

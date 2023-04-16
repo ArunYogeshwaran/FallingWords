@@ -2,6 +2,7 @@ package com.aruny.fallingwords.domain
 
 import com.aruny.fallingwords.data.WordTranslationPair
 import com.aruny.fallingwords.data.WordsRepository
+import com.aruny.fallingwords.domain.model.UIWordsModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -10,24 +11,32 @@ class WordMixerUseCase(private val wordsRepository: WordsRepository) {
         return withContext(Dispatchers.IO) {
             val wordTranslationPairs = wordsRepository.getWords()
             return@withContext wordTranslationPairs.map {
+                val randomSpanishWord = getRandomSpanishWord(it.textSpa, wordTranslationPairs)
                 UIWordsModel(
                     englishWord = it.textEng,
-                    correctTranslation = it.textSpa,
-                    optionWords = getOptions(it.textSpa, wordTranslationPairs)
+                    spanishWord = randomSpanishWord,
+                    isCorrectTranslation = randomSpanishWord == it.textSpa
                 )
             }
         }
     }
 
-    private fun getOptions(
-        correctOption: String,
+    private fun getRandomSpanishWord(
+        correctTranslation: String,
         wordTranslationPairs: List<WordTranslationPair>
-    ): List<String> {
+    ): String {
         val mutableList = mutableListOf<String>()
-        mutableList.add(correctOption)
-        wordTranslationPairs.shuffled().take(TOTAL_OPTIONS_COUNT - 1).forEach {
+        mutableList.add(correctTranslation)
+        wordTranslationPairs.shuffled().take(RANDOM_OPTIONS_COUNT).forEach {
             mutableList.add(it.textSpa)
         }
-        return mutableList
+        return mutableList.random()
+    }
+
+    companion object {
+        /**
+         * Higher the number means lesser probability of getting the correct translation.
+         */
+        private const val RANDOM_OPTIONS_COUNT = 3
     }
 }

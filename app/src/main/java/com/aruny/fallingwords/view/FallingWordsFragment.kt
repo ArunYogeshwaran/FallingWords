@@ -12,7 +12,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.aruny.fallingwords.R
 import com.aruny.fallingwords.databinding.FragmentFallingWordsBinding
-import com.aruny.fallingwords.domain.UIWordsModel
+import com.aruny.fallingwords.domain.model.UIWordsModel
 
 /**
  * The fragment which hosts the actual game of falling words.
@@ -47,7 +47,7 @@ class FallingWordsFragment : Fragment() {
 
         binding.buttonWrong.setOnClickListener {
             val currentWord = listOfWords[currentWordIndex]
-            if (binding.textFallingWord.text != currentWord.correctTranslation) {
+            if (currentWord.isCorrectTranslation.not()) {
                 updateCurrentScore()
                 println("You are right bro!!")
             } else {
@@ -60,7 +60,7 @@ class FallingWordsFragment : Fragment() {
 
         binding.buttonCorrect.setOnClickListener {
             val currentWord = listOfWords[currentWordIndex]
-            if (binding.textFallingWord.text == currentWord.correctTranslation) {
+            if (currentWord.isCorrectTranslation) {
                 updateCurrentScore()
                 println("You are right bro!!")
             } else {
@@ -73,7 +73,7 @@ class FallingWordsFragment : Fragment() {
 
         viewModel.wordPairLiveData.observe(viewLifecycleOwner) {
             listOfWords = it
-            binding.textFallingWord.text = listOfWords[currentWordIndex].optionWords.random()
+            binding.textFallingWord.text = listOfWords[currentWordIndex].spanishWord
             startFallingWords()
         }
 
@@ -105,9 +105,8 @@ class FallingWordsFragment : Fragment() {
             override fun onAnimationStart(animation: Animation?) {
                 // TODO: Remove the Ans: here
                 binding.textEnglishWord.text =
-                    listOfWords[currentWordIndex].englishWord + " (Ans:" + listOfWords[currentWordIndex].correctTranslation + ")"
-                binding.textFallingWord.text =
-                    listOfWords[currentWordIndex].optionWords.random()
+                    listOfWords[currentWordIndex].englishWord + " --> is Correct : " + listOfWords[currentWordIndex].isCorrectTranslation
+                binding.textFallingWord.text = listOfWords[currentWordIndex].spanishWord
                 binding.textFallingWord.startAnimation(animation)
             }
 
