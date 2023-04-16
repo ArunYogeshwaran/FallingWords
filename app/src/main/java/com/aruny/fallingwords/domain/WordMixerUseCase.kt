@@ -5,8 +5,9 @@ import com.aruny.fallingwords.data.WordsRepository
 import com.aruny.fallingwords.domain.model.UIWordsModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class WordMixerUseCase(private val wordsRepository: WordsRepository) {
+class WordMixerUseCase @Inject constructor(private val wordsRepository: WordsRepository) {
     suspend fun fetchWords(): List<UIWordsModel> {
         return withContext(Dispatchers.IO) {
             val wordTranslationPairs = wordsRepository.getWords()

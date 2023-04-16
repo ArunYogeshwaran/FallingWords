@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aruny.fallingwords.data.WordsRepository
-import com.aruny.fallingwords.domain.model.UIWordsModel
 import com.aruny.fallingwords.domain.WordMixerUseCase
+import com.aruny.fallingwords.domain.model.UIWordsModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FallingWordsFragmentViewModel : ViewModel() {
-    private val wordMixerUseCase = WordMixerUseCase(WordsRepository())
+@HiltViewModel
+class FallingWordsFragmentViewModel @Inject constructor(
+    private val wordMixerUseCase: WordMixerUseCase
+) : ViewModel() {
 
     private val _wordPairLiveData = MutableLiveData<List<UIWordsModel>>()
     val wordPairLiveData: LiveData<List<UIWordsModel>> = _wordPairLiveData

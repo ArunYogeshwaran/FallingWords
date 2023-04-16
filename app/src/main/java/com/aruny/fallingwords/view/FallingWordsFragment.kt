@@ -13,10 +13,12 @@ import androidx.navigation.fragment.findNavController
 import com.aruny.fallingwords.R
 import com.aruny.fallingwords.databinding.FragmentFallingWordsBinding
 import com.aruny.fallingwords.domain.model.UIWordsModel
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * The fragment which hosts the actual game of falling words.
  */
+@AndroidEntryPoint
 class FallingWordsFragment : Fragment() {
     private var listOfWords: List<UIWordsModel> = mutableListOf()
     private var currentWordIndex = 0

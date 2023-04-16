@@ -1,9 +1,18 @@
 package com.aruny.fallingwords.data
 
-class WordsRepository {
-    private val wordsRemoteService = WordsRemoteServiceImpl()
+import com.aruny.fallingwords.data.rest.WordsApi
+import javax.inject.Inject
 
-    suspend fun getWords(): List<WordTranslationPair> {
-        return wordsRemoteService.getWords()
+interface WordsRepository {
+    suspend fun getWords(): List<WordTranslationPair>
+}
+
+class WordsRepositoryImpl @Inject constructor(
+    private val wordsApi: WordsApi
+) :
+    WordsRepository {
+
+    override suspend fun getWords(): List<WordTranslationPair> {
+        return wordsApi.getWords()
     }
 }

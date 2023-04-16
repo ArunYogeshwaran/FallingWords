@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
 }
 
 def coreKtxVersion = "1.10.0"
@@ -13,6 +15,7 @@ def jUnitVersion = "4.13.2"
 def jUnitExtVersion = "1.1.5"
 def espressoCoreVersion = "3.5.1"
 def retrofitVersion = "2.9.0"
+def hiltVersion = "2.45"
 
 android {
     namespace 'com.aruny.fallingwords'
@@ -59,6 +62,9 @@ dependencies {
 
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
     testImplementation "junit:junit:$jUnitVersion"
 
