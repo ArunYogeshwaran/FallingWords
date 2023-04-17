@@ -7,6 +7,8 @@ import javax.inject.Inject
 interface WordsRepository {
     /**
      * Gets a list of [WordTranslationPair] from the data source.
+     *
+     * @return List of [WordTranslationPair]
      */
     suspend fun getWords(): List<WordTranslationPair>
 }

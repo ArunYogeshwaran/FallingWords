@@ -68,7 +68,6 @@ class FallingWordsFragmentViewModel @Inject constructor(
 
     private fun fetchWords() {
         _uiState.value = UiState.FetchingWords(DEFAULT_SCORE, MAX_LIVES)
-        // TODO: Move this to a Provider class and inject it using Hilt
         viewModelScope.launch(Dispatchers.IO) {
             wordsList = wordMixerUseCase.fetchWords()
             _uiState.postValue(UiState.WordsFetched)

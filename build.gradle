@@ -6,10 +6,16 @@ buildscript {
     ext.appCompatVersion = "1.6.1"
     ext.googleMaterialVersion = "1.8.0"
     ext.constraintlayoutVersion = "2.1.4"
+    ext.retrofitVersion = "2.9.0"
+
     ext.jUnitVersion = "4.13.2"
+    ext.coroutinesTestVerion = "1.6.4"
+    ext.testRunnerVersion = "1.5.2"
+    ext.coreTestingVersion = "2.2.0"
+    ext.mockitoKotlinVersion = "4.0.0"
+
     ext.jUnitExtVersion = "1.1.5"
     ext.espressoCoreVersion = "3.5.1"
-    ext.retrofitVersion = "2.9.0"
 
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navComponentVersion"

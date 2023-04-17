@@ -70,9 +70,7 @@ class FallingWordsFragment : Fragment() {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     launch {
                         viewModel.currentWordFlow.collectLatest {
-                            // TODO: Remove the Ans: here
-                            textEnglishWord.text =
-                                it.englishWord + " --> is Correct : " + it.isCorrectTranslation
+                            textEnglishWord.text = it.englishWord
                             textFallingWord.text = it.otherLangWord
                         }
                     }

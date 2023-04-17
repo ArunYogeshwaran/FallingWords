@@ -7,7 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class WordMixerUseCase @Inject constructor(private val wordsRepository: WordsRepository) {
+/**
+ * Use class containing logic to mix the correct word choice with a few more random words.
+ */
+open class WordMixerUseCase @Inject constructor(private val wordsRepository: WordsRepository) {
     /**
      * Fetches the list of words the data source, creates and returns the word groups by randomly
      * mixing the option words.
