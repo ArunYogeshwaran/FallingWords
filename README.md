@@ -1,9 +1,3 @@
-You should take 4 and no more than 8 hours to create the game. 
-The result should be a runnable Android Cradle project as a link to a repository or as a zip file.
-
-Please add a small documentation explaining how much you took and how it was distributed, 
-why you solved the problem in this particular way and what you would do differently if you had more time.
-
 ## About the game
 "Save the words" aka "Falling words" is a small language learning game for Android. As soon as the game starts, an English word will be
 shown at the bottom of the screen. A word from another language (For ex: Spanish) falls down from the top. The player should tap 
