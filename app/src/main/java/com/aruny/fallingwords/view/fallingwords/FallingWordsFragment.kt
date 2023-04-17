@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -76,17 +77,26 @@ class FallingWordsFragment : Fragment() {
                     }
                     launch {
                         viewModel.scoreStateFlow.collectLatest {
+                            val animBounce =
+                                AnimationUtils.loadAnimation(requireContext(), R.anim.bounce)
                             textCurrentScore.text = getString(R.string.score_number, it)
+                            textCurrentScore.startAnimation(animBounce)
                         }
                     }
                     launch {
                         viewModel.livesStateFlow.collectLatest {
+                            val animBounce =
+                                AnimationUtils.loadAnimation(requireContext(), R.anim.bounce)
                             textCurrentLives.text = getString(R.string.lives_number, it)
+                            textCurrentLives.startAnimation(animBounce)
                         }
                     }
                     launch {
                         viewModel.timerStateFlow.collectLatest {
+                            val animBounce =
+                                AnimationUtils.loadAnimation(requireContext(), R.anim.bounce)
                             textTimer.text = getString(R.string.timer_secs, it)
+                            textTimer.startAnimation(animBounce)
                         }
                     }
                 }
