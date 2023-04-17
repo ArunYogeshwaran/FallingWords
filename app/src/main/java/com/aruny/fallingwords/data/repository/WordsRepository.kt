@@ -17,6 +17,7 @@ class WordsRepositoryImpl @Inject constructor(
     private val wordsApi: WordsApi
 ) : WordsRepository {
 
+    // TODO: Handle network failures
     override suspend fun getWords(): List<WordTranslationPair> {
         return wordsApi.getWords()
     }

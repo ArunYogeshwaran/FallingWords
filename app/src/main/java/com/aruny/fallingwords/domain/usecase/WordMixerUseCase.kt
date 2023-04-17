@@ -17,6 +17,7 @@ open class WordMixerUseCase @Inject constructor(private val wordsRepository: Wor
      *
      * @return List of [UIWordsModel]
      */
+    // TODO: Handle exception cases
     suspend fun fetchWords(): List<UIWordsModel> {
         return withContext(Dispatchers.IO) {
             val wordTranslationPairs = wordsRepository.getWords()

@@ -26,6 +26,7 @@ class WordMixerUseCaseTest {
         doReturn(list).`when`(wordsRepositoryMock).getWords()
 
         val resultList = wordMixerUseCase.fetchWords()
+        assertThat(list.size, `is`(resultList.size))
         assertThat(list[0].textEng, `is`(resultList[0].englishWord))
         assertThat(list[1].textEng, `is`(resultList[1].englishWord))
         assertThat(list[2].textEng, `is`(resultList[2].englishWord))
