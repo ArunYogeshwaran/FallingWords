@@ -69,3 +69,6 @@ The UI of the app is not polished. I'm still working on it.
 ## To install the app
 [APK Link](https://drive.google.com/file/d/11tdq-9RGFUigxm9AeGv50QXyBZpaNts6/view?usp=sharing)
 
+## App Demo
+[Demo Link](https://drive.google.com/file/d/17YJcxFs1llRRpZ8GQOXOSCO3-z2YbnVu/view?usp=sharing)
+
