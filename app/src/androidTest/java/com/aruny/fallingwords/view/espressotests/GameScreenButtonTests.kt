@@ -38,7 +38,7 @@ class GameScreenButtonTests {
 
         clickStartGame()
 
-        veifyWrongButton()
+        verifyWrongButton()
 
         verifyCorrectButton()
     }
@@ -55,7 +55,7 @@ class GameScreenButtonTests {
         correctButton.check(matches(isDisplayed()))
     }
 
-    private fun veifyWrongButton() {
+    private fun verifyWrongButton() {
         val wrongButton = onView(
             allOf(
                 withId(R.id.button_wrong),
